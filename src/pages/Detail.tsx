@@ -1,19 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-
-type PostProps = {
-  id: number,
-  title: string,
-  thumbnailUrl: string,
-  createdAt: string,
-  categories: string[]
-  content: string
-};
+import { Post } from "../types/Post";
 
 export default function PostDetail() {
   const [loading, setLoading] = useState<boolean>(true)
   const { id } = useParams<{ id: string }>();
-  const [post, setPost] = useState<PostProps | null>(null)
+  const [post, setPost] = useState<Post | null>(null)
 
   useEffect(() => {
     const fetcher = async () => {
@@ -28,7 +20,7 @@ export default function PostDetail() {
           throw new Error("Failed to fetch posts");
         }
 
-        const data: { post: PostProps } = await res.json()
+        const data: { post: Post } = await res.json()
         setPost(data.post)
       } catch (err) {
         console.error("Error", err)

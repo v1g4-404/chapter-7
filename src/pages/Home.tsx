@@ -1,19 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
-type PostsProps = {
-  id: number,
-  title: string,
-  thumbnailUrl: string,
-  createdAt: string,
-  categories: string[]
-  content: string
-};
+import { Post } from "../types/Post";
 
 export default function PostList() {
 
   const [loading, setLoading] = useState<boolean>(true)
-  const [posts, setPosts] = useState<PostsProps[]>([])
+  const [posts, setPosts] = useState<Post[]>([])
 
   useEffect(() => {
     const fetcher = async () => {
@@ -24,7 +16,7 @@ export default function PostList() {
           throw new Error("Failed to fetch posts");
         }
 
-        const data: { posts: PostsProps[] } = await res.json()
+        const data: { posts: Post[] } = await res.json()
         setPosts(data.posts)
       } catch (err) {
         console.error("Error", err)
